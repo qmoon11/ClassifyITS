@@ -5,6 +5,7 @@
 #' @param pdf_file Output path for multi-page PDF
 #' @param caption_texts Vector of captions for PDF pages (optional)
 #' @param rank_names Vector of rank names (default: c("Phylum",...))
+#' @import ggplot2
 #' @return List with pdf_file (invisible)
 #' @export
 save_taxonomy_graphics <- function(
