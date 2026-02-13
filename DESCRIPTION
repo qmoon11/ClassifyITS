@@ -1,0 +1,10 @@
+Package: ClassifyITS
+Title: Fungal Assignment Pipeline
+Version: 0.1.0
+Authors@R: person("Quinn Moon", email = "qmoon@umich.edu", role = c("aut", "cre"))
+Description: Automated pipeline for assigning taxonomy to fungal ITS sequencing. The package takes in representative OTU FASTA sequences and BLAST results to produce OTU assignments, flags potential taxa for inspection, and produces summary graphics.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Imports: ggplot2, dplyr, magrittr, Biostrings, gridExtra, grid, reshape2, RColorBrewer, data.table
+RoxygenNote: 7.3.3
+
