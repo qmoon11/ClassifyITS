@@ -46,6 +46,13 @@ BiocManager::install("Biostrings")
 library(Biostrings)
 ```
 
+## Inspecting taxonomic assingments
+
+It is recommended to carefully examine 1) OTUs that failed the pipeline 2) any OTUs that failed to assign at kingdom level (see list in outputs/intial.assingments.csv) after classifying) as these are likely sequencing errors.
+See [Inspection](inspection.md) for information on inspecting results, including:
+- How to interpret the `initial_assignments.csv` output file
+- Common reasons for failed assignments and how to identify them
+- Tips for manual curation of taxonomy assignments (e.g. manually checking BLAST results for fungal OTUs unassigned at phylum or class level)
 
 ## Documentation & User Guides
 
