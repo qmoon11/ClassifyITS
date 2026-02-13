@@ -1,3 +1,13 @@
+#' Easy taxonomy assignment for OTUs using BLAST QC output & phylum-specific thresholds.
+#'
+#' @param blast_filtered QC-filtered BLAST dataframe (with parsed taxonomy columns!)
+#' @param cutoffs_file Path to taxonomy cutoffs CSV file. Defaults to package's "extdata/taxonomy_cutoffs.csv"
+#' @param default_cutoff Default percent identity cutoff for species assignment (default: 98)
+#' @param package_name If using in a package, specify the package name for system.file fallback (default: NULL)
+#' @return List with assigned_otus_df and remaining_otus_df
+#' @importFrom magrittr %>%
+#' @importFrom dplyr arrange
+#' @export
 easy_assignments <- function(
     blast_filtered,
     cutoffs_file = NULL,
@@ -11,19 +21,17 @@ easy_assignments <- function(
   all_otus <- unique(blast_filtered$qseqid)
   
   # --- Path resolution for cutoffs_file ---
-  if (is.null(cutoffs_file)) {
-    # Try to find default file via system.file (works if package is installed)
+
+  if (is.null(cutoffs_file) || !file.exists(cutoffs_file)) {
+    # Try installed package location (system.file always works for users)
     cutoffs_file <- system.file("extdata", "taxonomy_cutoffs.csv", package = "ClassifyITS")
-    # Fallback for development mode (not installed, just source code)
+    # If running in development mode and system.file fails (empty string), try local path
     if (!file.exists(cutoffs_file) || nchar(cutoffs_file) == 0) {
-      cutoffs_file <- "inst/extdata/taxonomy_cutoffs.csv"
+      cutoffs_file <- file.path("inst", "extdata", "taxonomy_cutoffs.csv")
     }
   }
   if (!file.exists(cutoffs_file) || nchar(cutoffs_file) == 0) {
-    stop(sprintf(
-      "Cutoffs file '%s' not found. Please provide a valid path or ensure the package includes inst/extdata/taxonomy_cutoffs.csv.",
-      cutoffs_file
-    ))
+    stop("Could not locate taxonomy_cutoffs.csv. Please reinstall the package or supply a custom file.")
   }
   
   cutoffs_data <- parse_taxonomy_cutoffs(cutoffs_file)$long
