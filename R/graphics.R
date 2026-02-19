@@ -180,6 +180,11 @@ unique_tax_counts <- sapply(tax_levels, function(lvl) {
   
   message("Saved taxonomy graphics and summary tables to PDF in outputs")
   invisible(list(
-    pdf_file = pdf_file
+    pdf_file = pdf_file,
+    hist_plot = hist_plot,
+    step_table = step_table,               # summary stats as a data.frame/table
+    assignment_bar_plot = assignment_bar_plot,
+    phylum_plot = phylum_plot,
+    final_count_tbl = final_count_tbl      # unique taxa table as a data.frame
   ))
 }

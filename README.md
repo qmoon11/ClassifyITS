@@ -85,11 +85,11 @@ See [Citations](citations.md) for a list of relevant literature
 
 ## About Taxonomic Cutoffs
 
-ClassifyITS uses taxon-specific cutoffs for kingdom through species. Default cutoffs are provided for all fungal phyla and most common classes and orders found in ITS data. The current list can be seen in `inst/extdata/taxonomy_cutoffs.csv` in the package source code.
+ClassifyITS uses taxon-specific cutoffs for kingdom through species. At minimum, default cutoffs are provided for all fungal phyla, common classes and orders found in ITS data, and a subset of well studied families, genera, and species. The current list can be seen in `inst/extdata/taxonomy_cutoffs.csv` in the package source code.
 
 You can provide your own custom cutoffs file to fine-tune assignments for your dataset or research question.
 
-If you are knowledgeable in a specific taxonomic group and think ClassifyITS could benefit from modified cutoffs for a particular class or order, please reach out with proposed cutoffs and supporting citations. Community contributions are welcomed!
+If you are knowledgeable in a specific taxonomic group and think ClassifyITS could benefit from modified cutoffs for a particular group, please reach out with proposed cutoffs and supporting citations. Community contributions are welcomed!
 
 > The package is designed so cutoffs can be easily updated as new fungal groups are discovered and taxonomy is refined.
 

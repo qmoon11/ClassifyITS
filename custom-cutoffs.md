@@ -25,12 +25,14 @@ A sample file is provided at `inst/extdata/taxonomy_cutoffs.csv` in package sour
 
 Reference example (in CSV format):
 
-    rank,Kingdom,Phylum,Class,Order,Family,Genus,Species,e-value-kingdom,e-value-phylum,e-value-class,e-value-order,e-value-family,e-value-genus,per-ident-genus,per-ident-species
-    kingdom,Metazoa,,,,,,1e-45
-    kingdom,Fungi,,,,,1e-50
-    order,Fungi,,,,,,,1e-80 
-    phylum,Fungi,Ascomycota,,,,,1e-70
-    species,Fungi,Ascomycota,Saccharomycetes,Saccharomycetales,Saccharomycetaceae,Saccharomyces,,,,,,,,98
+| rank    | Kingdom | Phylum      | Class           | Order              | Family              | Genus         | Species             | e-value-kingdom | e-value-phylum | e-value-class | e-value-order | e-value-family | e-value-genus | per-ident-genus | per-ident-species |
+|---------|---------|-------------|-----------------|--------------------|---------------------|---------------|---------------------|-----------------|---------------|---------------|---------------|---------------|---------------|-----------------|------------------|
+| kingdom | Metazoa |             |                 |                    |                     |               |                     | 1e-45           |               |               |               |               |               |                 |                  |
+| kingdom | Fungi   |             |                 |                    |                     |               |                     | 1e-50           |               |               |               |               |               |                 |                  |
+| order   | Fungi   |             |                 |                    |                     |               |                     |                 |               |               | 1e-80         |               |               |                 |                  |
+| phylum  | Fungi   | Ascomycota  |                 |                    |                     |               |                     |                 | 1e-70         |               |               |               |               |                 |                  |
+| species | Fungi   | Ascomycota  | Saccharomycetes | Saccharomycetales | Saccharomycetaceae  | Saccharomyces |                     |                 |               |               |               |               |               |                 | 98               |
+
 
 Tip:
 Check out `inst/extdata/taxonomy_cutoffs.csv` in the package folder for the full list used in ClassifyITS example and recommended formatting.

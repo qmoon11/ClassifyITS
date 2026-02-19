@@ -1,0 +1,166 @@
+---
+title: "ClassifyITS Pipeline Overview"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ClassifyITS Pipeline Overview}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Introduction
+
+This vignette shows how to use ClassifyITS to assign taxonomy to fungal ITS sequences, visualize results, and review QC outputs. Summary plots and tables are generated here, and are also compiled into a multi-page PDF for easy sharing.
+
+---
+
+## Run the Pipeline
+
+```{r}
+library(ClassifyITS)
+
+# Paths to example BLAST and FASTA files in your package (replace as needed)
+blast_path <- system.file("extdata", "example_BLAST.csv", package = "ClassifyITS")
+fasta_path <- system.file("extdata", "example_FASTA.fasta", package = "ClassifyITS")
+
+# Run the assignment pipeline
+results <- ITS_assignment(
+  blast_file = blast_path,
+  rep_fasta  = fasta_path
+)
+
+# Generate summary graphics and tables
+graphics <- save_taxonomy_graphics(
+  all_results = results$all_results,
+  hist_plot = results$hist_plot
+)
+```
+
+---
+
+## Inspect Console Outputs
+
+The pipeline may print:
+
+```
+Taxonomy assignments exported to outputs/initial_assignments.csv
+Warning: Some FASTA sequences failed QC and could not be classified using this pipeline due to missing or poor BLAST results.
+Saved taxonomy graphics and summary tables to PDF in outputs
+```
+
+This is normal: a small number of OTUs often fail QC or don't receive a taxonomy assignment at certain levels. See the PDF and CSV outputs for details.
+This warning is meant to remind users to review the outputs and consider manual curation for unassigned OTUs, especially if they are abundant or of particular interest in downstream analyses. Or perhaps discard these OTUs if they are rare and likely spurious. The pipeline provides the information needed to make informed decisions about how to handle these cases in your dataset.
+
+The most common reason for an OTU to fail QC is that the BLAST file did not contain any BLAST results for that OTU.
+---
+
+## Visualize Summary Plots
+
+Below are the main summary plots. These are also compiled together into `outputs/combined_taxonomy_graphics.pdf`.
+
+```{r}
+# Alignment length histogram
+print(graphics$hist_plot)
+
+# Assignment bar chart
+print(graphics$assignment_bar_plot)
+
+# Phylum stacked bar chart
+print(graphics$phylum_plot)
+```
+
+---
+
+## Review Tabular Outputs
+
+### Step Summary Table
+
+```{r}
+knitr::kable(head(graphics$step_table))
+```
+
+### Unique Taxa Counts Table
+
+```{r}
+knitr::kable(graphics$final_count_tbl)
+```
+
+---
+
+## Investigate Unclassified OTUs
+
+```{r}
+assignments <- read.csv("outputs/initial_assignments.csv", stringsAsFactors = FALSE)
+# Subset: fungal OTUs missing/unclassified at phylum level
+unclassified_phylum <- assignments[
+  assignments$kingdom == "Fungi" &
+    (is.na(assignments$phylum) | assignments$phylum == "" | assignments$phylum == "Unclassified"),
+]
+knitr::kable(head(unclassified_phylum))
+```
+
+---
+
+## PDF Output
+
+> The PDF file [`outputs/combined_taxonomy_graphics.pdf`] contains all the summary plots and tables shown above—ready for review, archiving, or sharing.
+
+---
+
+## Conclusion
+
+ClassifyITS produces summary visualizations and tables for every run. Failed QC and missing assignments are expected and offer opportunities for manual review and further curation. Use the summary plots and PDF to get a comprehensive overview of your dataset.
+
+
+## Review Tabular Outputs
+
+### Step Summary Table
+
+```{r}
+knitr::kable(head(graphics$step_table))
+```
+
+### Unique Taxa Counts Table
+
+```{r}
+knitr::kable(graphics$final_count_tbl)
+```
+
+---
+
+## Display Final Assignments Table
+
+```{r}
+# Show the first 10 rows as a preview in the vignette
+knitr::kable(head(results$all_results, 10))
+
+# View the full assignments table interactively (in RStudio)
+# Uncomment the following line to use View in your own R session!
+# View(results$all_results)
+```
+
+> Tip: To browse the full taxonomy assignment interactively, use `View(results$all_results)` in your own R session. This opens the table in a spreadsheet viewer.
+
+---
+
+## Investigate Unclassified OTUs
+
+```{r}
+unclassified_phylum <- results$all_results[
+  results$all_results$kingdom == "Fungi" &
+    (is.na(results$all_results$phylum) | results$all_results$phylum == "" | results$all_results$phylum == "Unclassified"),
+]
+knitr::kable(head(unclassified_phylum, 10))
+```
+
+---
+
+## PDF Output
+
+> The PDF file [`outputs/combined_taxonomy_graphics.pdf`] contains all the summary plots and tables shown above—ready for review, archiving, or sharing.
+
+---
+
+## Conclusion
+
+ClassifyITS produces summary visualizations and tables for every run. Failed QC and missing assignments are expected and offer opportunities for manual review and further curation. Use the summary plots and PDF to get a comprehensive overview of your dataset.
+

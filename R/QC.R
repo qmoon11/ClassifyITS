@@ -10,40 +10,58 @@
 load_and_check <- function(blast_file, rep_fasta, taxonomy_col = "stitle") {
   expected_names <- c("qseqid", "sseqid", "pident", "length", "mismatch", "gapopen",
                       "qstart", "qend", "sstart", "send", "evalue", "bitscore", "stitle")
-  blast <- read.table(blast_file, sep = "\t", header = TRUE)
-  if (!all(expected_names %in% colnames(blast))) {
-    blast <- read.table(blast_file, sep = "\t", header = FALSE, col.names = expected_names)
+  
+  # Detect file type from extension and read appropriately
+  file_ext <- tolower(tools::file_ext(blast_file))
+  if (file_ext == "csv") {
+    blast <- read.csv(blast_file, header = TRUE, stringsAsFactors = FALSE)
+    if (!all(expected_names %in% colnames(blast))) {
+      blast <- read.csv(blast_file, header = FALSE, col.names = expected_names, stringsAsFactors = FALSE)
+    }
+  } else if (file_ext %in% c("tsv", "txt")) {
+    blast <- read.table(blast_file, sep = "\t", header = TRUE, stringsAsFactors = FALSE)
+    if (!all(expected_names %in% colnames(blast))) {
+      blast <- read.table(blast_file, sep = "\t", header = FALSE, col.names = expected_names, stringsAsFactors = FALSE)
+    }
+  } else {
+    stop("blast_file must have a .csv, .tsv, or .txt extension.")
   }
   
   if (taxonomy_col %in% colnames(blast)) {
     tax_ranks <- c("kingdom", "phylum", "class", "order", "family", "genus", "species")
-    pattern <- "([a-z]__[^;]+)"
-    tax_split <- regmatches(blast[[taxonomy_col]], gregexpr(pattern, blast[[taxonomy_col]]))
-    tax_df <- do.call(rbind, lapply(tax_split, function(x) {
-      v <- rep(NA, 7)
-      names(v) <- tax_ranks
-      for (seg in x) {
-        rank_code <- substr(seg, 1, 3)
-        value <- sub("^[a-z]__", "", seg)
-        if (grepl("_sp$", value) || grepl("Incertae_sedis", value, ignore.case=TRUE)) value <- "Unclassified"
-        rank <- switch(rank_code,
-                       "k__"="kingdom",
-                       "p__"="phylum",
-                       "c__"="class",
-                       "o__"="order",
-                       "f__"="family",
-                       "g__"="genus",
-                       "s__"="species",
-                       NA)
-        if (rank == "species" && !is.na(value) && value != "Unclassified") {
-          value <- gsub("_", " ", value)
+    already_parsed <- all(tax_ranks %in% colnames(blast))
+    if (!already_parsed) {
+      cat("Parsing taxonomy from", taxonomy_col, "column...\n")
+      pattern <- "([a-z]__[^;]+)"
+      tax_split <- regmatches(blast[[taxonomy_col]], gregexpr(pattern, blast[[taxonomy_col]]))
+      tax_df <- do.call(rbind, lapply(tax_split, function(x) {
+        v <- rep(NA, 7)
+        names(v) <- tax_ranks
+        for (seg in x) {
+          rank_code <- substr(seg, 1, 3)
+          value <- sub("^[a-z]__", "", seg)
+          if (grepl("_sp$", value) || grepl("Incertae_sedis", value, ignore.case=TRUE) || is.na(value) || value == "") value <- "Unclassified"
+          rank <- switch(rank_code,
+                         "k__"="kingdom",
+                         "p__"="phylum",
+                         "c__"="class",
+                         "o__"="order",
+                         "f__"="family",
+                         "g__"="genus",
+                         "s__"="species",
+                         NA)
+          if (rank == "species" && !is.na(value) && value != "Unclassified") {
+            value <- gsub("_", " ", value)
+          }
+          if (!is.na(rank)) v[rank] <- value
         }
-        if (!is.na(rank)) v[rank] <- value
-      }
-      return(v)
-    }))
-    tax_df <- as.data.frame(tax_df, stringsAsFactors=FALSE)
-    blast <- cbind(blast, tax_df)
+        return(v)
+      }))
+      tax_df <- as.data.frame(tax_df, stringsAsFactors=FALSE)
+      blast <- cbind(blast, tax_df)
+    } else {
+      cat("Taxonomy columns already present. Skipping parsing.\n")
+    }
   }
   
   # Drop undefined kingdom and phylum
@@ -57,6 +75,7 @@ load_and_check <- function(blast_file, rep_fasta, taxonomy_col = "stitle") {
   if (!file.exists(rep_fasta)) stop("FASTA file not found.")
   if (!grepl("\\.(fa|fasta)$", rep_fasta, ignore.case = TRUE)) stop(".FASTA format required.")
   rep_seqs <- Biostrings::readDNAStringSet(rep_fasta)
+  
   list(blast = blast, rep_seqs = rep_seqs)
 }
 
