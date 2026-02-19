@@ -73,7 +73,8 @@ load_and_check <- function(blast_file, rep_fasta, taxonomy_col = "stitle") {
 #' @param fraction Numeric fraction of median rep-seq length (default: 0.6)
 #' @return Filtered BLAST dataframe
 #' @export
-trim_alignments <- function(blast, rep_seqs, fraction = 0.6) {
+trim_alignments <- function(blast, rep_seqs, fraction = NULL) {
+  if (is.null(fraction)) fraction <- 0.6
   med_len <- median(nchar(as.character(rep_seqs)))
   cutoff <- med_len * fraction
   dplyr::filter(blast, length > cutoff)

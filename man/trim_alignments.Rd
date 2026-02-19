@@ -4,7 +4,7 @@
 \alias{trim_alignments}
 \title{Trim BLAST alignments by minimum length (default fraction: 0.6 of median rep-seq length)}
 \usage{
-trim_alignments(blast, rep_seqs, fraction = 0.6)
+trim_alignments(blast, rep_seqs, fraction = NULL)
 }
 \arguments{
 \item{blast}{BLAST dataframe}
