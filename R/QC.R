@@ -24,7 +24,10 @@ load_and_check <- function(blast_file, rep_fasta, taxonomy_col = "stitle") {
       blast <- read.table(blast_file, sep = "\t", header = FALSE, col.names = expected_names, stringsAsFactors = FALSE)
     }
   } else {
-    stop("blast_file must have a .csv, .tsv, or .txt extension.")
+    stop("blast_file must have a .csv or .tsv extension.")
+  }
+  if ("length" %in% colnames(blast)) {
+    blast$length <- as.numeric(blast$length)
   }
   
   if (taxonomy_col %in% colnames(blast)) {
