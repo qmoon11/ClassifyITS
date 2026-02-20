@@ -6,6 +6,16 @@
 \usage{
 best_hit_taxonomy_assignment(blast_qc, cutoffs_long, defaults)
 }
+\arguments{
+\item{blast_qc}{A data.frame of BLAST results for query sequences, must include columns for taxonomic ranks and alignment statistics.}
+
+\item{cutoffs_long}{A data.frame specifying per-rank cutoffs for assignment. Must include columns 'rank', 'cutoff_type', and 'cutoff_value'.}
+
+\item{defaults}{A named list of default cutoff values for each rank, used as fallback if no matching cutoff found.}
+}
+\value{
+A data.frame containing hierarchical taxonomy assignment for each query sequence.
+}
 \description{
 Pass ONLY those OTUs that haven't been assigned already!
 For each rank, if the best e-value hit is undefined and the second-best hit is defined

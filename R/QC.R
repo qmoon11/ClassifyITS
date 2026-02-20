@@ -1,11 +1,19 @@
+# Silence R CMD check notes on non-standard evaluation (NSE) in ggplot2/data.table code:
+utils::globalVariables(c(
+  "x", "label", "Rank", "Sample", "Percent", "OTU Count", "Fungal Phylum",
+  "evalue", "variable", "value"
+))
+
 #' Load and check BLAST results and rep-seq FASTA
 #'
 #' @param blast_file Path to BLAST results TSV file
 #' @param rep_fasta Path to representative sequences FASTA file
+#' @param taxonomy_col The column in BLAST file containing taxonomy strings (default "stitle")
 #' @return List with BLAST dataframe (kingdom-filtered) and rep_seqs DNAStringSet
 #' @importFrom Biostrings readDNAStringSet
 #' @importFrom magrittr %>%
 #' @importFrom dplyr arrange
+#' @importFrom utils read.table
 #' @export
 load_and_check <- function(blast_file, rep_fasta, taxonomy_col = "stitle") {
   expected_names <- c("qseqid", "sseqid", "pident", "length", "mismatch", "gapopen",
@@ -66,12 +74,13 @@ load_and_check <- function(blast_file, rep_fasta, taxonomy_col = "stitle") {
   list(blast = blast, rep_seqs = rep_seqs)
 }
 
-#' Trim BLAST alignments by minimum length (default fraction: 0.6 of median rep-seq length)
+#' Trim BLAST alignments by minimum length
 #'
 #' @param blast BLAST dataframe
 #' @param rep_seqs DNAStringSet
-#' @param fraction Numeric fraction of median rep-seq length (default: 0.6)
+#' @param fraction Numeric fraction of median rep-seq length (if NULL, defaults to 0.6)
 #' @return Filtered BLAST dataframe
+#' @importFrom stats median
 #' @export
 trim_alignments <- function(blast, rep_seqs, fraction = NULL) {
   if (is.null(fraction)) fraction <- 0.6
@@ -86,6 +95,8 @@ trim_alignments <- function(blast, rep_seqs, fraction = NULL) {
 #' @param rep_seqs DNAStringSet
 #' @param cutoff_fraction Numeric, fraction of median for cutoff (default: 0.6)
 #' @return ggplot object (for later use in PDF or display)
+#' @importFrom stats median
+#' @importFrom ggplot2 ggplot aes geom_histogram geom_vline scale_color_manual labs theme_minimal theme ggplotGrob
 #' @export
 plot_alignment_hist <- function(blast, rep_seqs, cutoff_fraction = 0.6) {
   median_length <- median(blast$length)

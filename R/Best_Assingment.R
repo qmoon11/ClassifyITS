@@ -1,4 +1,9 @@
 #' Parse taxonomy cutoffs file
+#'
+#' Reads and processes a taxonomy cutoffs CSV for assignment thresholds at various ranks.
+#'
+#' @param cutoffs_file Path to a taxonomy cutoffs CSV file. If not supplied or invalid, attempts to locate the default file in the package. 
+#' @return A list with two elements: \code{long}, a data frame of parsed cutoffs, and \code{ranks}, the vector of taxonomic ranks.
 #' @importFrom magrittr %>%
 #' @importFrom dplyr arrange
 #' @export
@@ -57,6 +62,10 @@ parse_taxonomy_cutoffs <- function(cutoffs_file = NULL) {
 #' For each rank, if the best e-value hit is undefined and the second-best hit is defined
 #' and at least 60% as good, use the second-best hit's value for that rank.
 #'
+#' @param blast_qc A data.frame of BLAST results for query sequences, must include columns for taxonomic ranks and alignment statistics.
+#' @param cutoffs_long A data.frame specifying per-rank cutoffs for assignment. Must include columns 'rank', 'cutoff_type', and 'cutoff_value'.
+#' @param defaults A named list of default cutoff values for each rank, used as fallback if no matching cutoff found.
+#' @return A data.frame containing hierarchical taxonomy assignment for each query sequence.
 #' @export
 best_hit_taxonomy_assignment <- function(blast_qc, cutoffs_long, defaults) {
   tax_ranks <- c("kingdom", "phylum", "class", "order", "family", "genus", "species")

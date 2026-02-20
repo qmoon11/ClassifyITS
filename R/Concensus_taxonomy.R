@@ -105,9 +105,9 @@ write_initial_assignments <- function(
     easy_df, consensus_df, rep_seqs, blast, blast_filtered,
     file = "outputs/initial_assignments.csv"
 ) {
-  requireNamespace("data.table", quietly = TRUE)
-  library(data.table)
-  
+  if (!requireNamespace("data.table", quietly = TRUE)) {
+    stop("Package 'data.table' is required.")
+  }
   tax_cols <- c("kingdom", "phylum", "class", "order", "family", "genus", "species")
   all_cols <- c("qseqid", tax_cols, "notes")
   

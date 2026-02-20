@@ -6,6 +6,12 @@
 \usage{
 parse_taxonomy_cutoffs(cutoffs_file = NULL)
 }
+\arguments{
+\item{cutoffs_file}{Path to a taxonomy cutoffs CSV file. If not supplied or invalid, attempts to locate the default file in the package.}
+}
+\value{
+A list with two elements: \code{long}, a data frame of parsed cutoffs, and \code{ranks}, the vector of taxonomic ranks.
+}
 \description{
-Parse taxonomy cutoffs file
+Reads and processes a taxonomy cutoffs CSV for assignment thresholds at various ranks.
 }
