@@ -43,21 +43,6 @@ consensus_taxonomy_assignment <- function(final_table, blast_qc) {
   final_table_consensus
 }
 
-#' Ensure data frame has all required columns (as character)
-#'
-#' @param df Data frame to fix
-#' @param all_cols Vector of required columns
-#' @return Fixed data frame (in correct order, with all columns present)
-#' @export
-ensure_cols <- function(df, all_cols) {
-  for (col in all_cols) {
-    if (!col %in% colnames(df)) df[[col]] <- NA_character_
-    df[[col]] <- as.character(df[[col]])
-  }
-  df <- df[, all_cols, drop=FALSE]
-  rownames(df) <- NULL
-  return(df)
-}
 
 #' Safely rbinds list of data frames, ensuring columns match
 #'
@@ -82,6 +67,22 @@ safe_rbind_list <- function(dfs, all_cols = NULL) {
   do.call(rbind, dfs)
 }
 
+#' Ensure data frame has all required columns (as character)
+#'
+#' @param df Data frame to fix
+#' @param all_cols Vector of required columns
+#' @return Fixed data frame (in correct order, with all columns present)
+#' @export
+ensure_cols <- function(df, all_cols) {
+  for (col in all_cols) {
+    if (!col %in% colnames(df)) df[[col]] <- NA_character_
+    df[[col]] <- as.character(df[[col]])
+  }
+  df <- df[, all_cols, drop=FALSE]
+  rownames(df) <- NULL
+  return(df)
+}
+
 #' Create and write the initial assignments table including drops at all steps
 #'
 #' @param easy_df Data frame of easy-assigned OTUs
@@ -92,15 +93,6 @@ safe_rbind_list <- function(dfs, all_cols = NULL) {
 #' @param file Path for output CSV
 #' @return Data frame written to CSV (and for downstream analysis)
 #' @export
-ensure_cols <- function(df, cols) {
-  missing <- setdiff(cols, names(df))
-  for (col in missing) {
-    df[[col]] <- NA
-  }
-  df <- df[, cols, drop = FALSE]
-  return(df)
-}
-
 write_initial_assignments <- function(
     easy_df, consensus_df, rep_seqs, blast, blast_filtered,
     file = "outputs/initial_assignments.csv"

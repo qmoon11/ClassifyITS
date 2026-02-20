@@ -4,34 +4,16 @@
 \alias{ensure_cols}
 \title{Ensure data frame has all required columns (as character)}
 \usage{
-ensure_cols(df, cols)
-
-ensure_cols(df, cols)
+ensure_cols(df, all_cols)
 }
 \arguments{
 \item{df}{Data frame to fix}
 
 \item{all_cols}{Vector of required columns}
-
-\item{easy_df}{Data frame of easy-assigned OTUs}
-
-\item{consensus_df}{Data frame of consensus-assigned OTUs (hard ones)}
-
-\item{rep_seqs}{DNAStringSet or named character vector of rep seqs}
-
-\item{blast}{Data frame of all BLAST results}
-
-\item{blast_filtered}{Data frame of filtered BLAST results}
-
-\item{file}{Path for output CSV}
 }
 \value{
 Fixed data frame (in correct order, with all columns present)
-
-Data frame written to CSV (and for downstream analysis)
 }
 \description{
 Ensure data frame has all required columns (as character)
-
-Create and write the initial assignments table including drops at all steps
 }
