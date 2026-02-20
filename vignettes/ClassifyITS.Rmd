@@ -59,6 +59,20 @@ This warning is meant to remind users to review the outputs and consider manual 
 
 The most common reason for an OTU to fail QC is that the BLAST file did not contain any BLAST results for that OTU.
 
+
+## Potential masked warnings
+
+Depending on the version of R and the packages installed, you may see warnings about masked functions when running ClassifyITS. These are generally not a cause for concern as they indicate that certain functions from ClassifyITS have the same names as functions in other packages (usually data.table and Biostrings). The warning is just letting you know which version of the function will be used when called. These warnings can be safely ignored as they do not indicate any actual problems with the functionality of ClassifyITS.
+
+```
+The following object is masked from ‘package:IRanges’:
+
+    shift
+
+The following objects are masked from ‘package:S4Vectors’:
+
+    first, second
+```
 ---
 
 ## Visualize Summary Plots

@@ -1,0 +1,4 @@
+﻿rank,Kingdom,Phylum,Class,Order,Family,Genus,Species,e-value-kingdom,e-value-phylum,e-value-class,e-value-order,e-value-family,e-value-genus,per-ident-genus,per-ident-species
+kingdom,Alveolata,,,,,,,e-50,,,,,,,
+phylum,Alveolata,Apicomplexa,,,,,,,e-30,,,,,,
+species,Fungi,Ascomycota,,,,,,,,,,,,,0.98

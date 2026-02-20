@@ -3,7 +3,7 @@
 Optionally, you can provide a custom taxonomy cutoffs file via the `cutoffs_file` parameter in the pipeline.
 
 Format:
-The file should be a CSV or TSV table with columns for each rank, name and its cutoffs (either e-value or percent identity), for example:
+The file should be a CSV table with columns for each rank, name and its cutoffs (either e-value or percent identity), for example:
 
 taxonomic_rank,evalue_cutoff,pident_cutoff
 kingdom,1e-5,80
@@ -31,7 +31,7 @@ Reference example (in CSV format):
 | kingdom | Fungi   |             |                 |                    |                     |               |                     | 1e-50           |               |               |               |               |               |                 |                  |
 | order   | Fungi   |             |                 |                    |                     |               |                     |                 |               |               | 1e-80         |               |               |                 |                  |
 | phylum  | Fungi   | Ascomycota  |                 |                    |                     |               |                     |                 | 1e-70         |               |               |               |               |                 |                  |
-| species | Fungi   | Ascomycota  | Saccharomycetes | Saccharomycetales | Saccharomycetaceae  | Saccharomyces |                     |                 |               |               |               |               |               |                 | 98               |
+| species | Fungi   | Ascomycota  | Saccharomycetes | Saccharomycetales  | Saccharomycetaceae  | Saccharomyces |                     |                 |               |               |               |               |               |                 | 98               |
 
 
 Tip:
