@@ -6,6 +6,10 @@
 #' @param caption_texts Vector of captions for PDF pages (optional)
 #' @param rank_names Vector of rank names (default: c("Phylum",...))
 #' @import ggplot2
+#' @importFrom grDevices pdf dev.off
+#' @importFrom stats median setNames
+#' @importFrom utils head read.csv read.table
+#' @importFrom RColorBrewer brewer.pal
 #' @return List with pdf_file (invisible)
 #' @export
 save_taxonomy_graphics <- function(
