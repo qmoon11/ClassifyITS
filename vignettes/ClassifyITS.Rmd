@@ -29,8 +29,7 @@ fasta_path <- system.file("extdata", "example_FASTA.fasta", package = "ClassifyI
 # Run the assignment pipeline, the only required inputs are the BLAST file and the representative sequence FASTA file
 results <- ITS_assignment(
   blast_file = blast_path,
-  rep_fasta  = fasta_path,
-  cutoff_fraction = 1.0
+  rep_fasta  = fasta_path
 )
 ```
 
