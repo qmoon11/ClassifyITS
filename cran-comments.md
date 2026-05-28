@@ -1,12 +1,16 @@
 ## Test environments
 - local macOS (R 4.4.3)
 - win-builder (R-devel)
+- rhub::check_for_cran() 
 
 ## R CMD check results
-0 errors | 0 warnings | 2 notes
+0 errors | 0 warnings | 1 notes
 
 Notes:
-- New submission.
 - unable to verify current time (local check); no files with future timestamps.
 
-* This is a new release.
+## Comments
+- Update release (version 1.0.2).
+- Summary of changes:
+  - minor bug fixes in the consensus checks
+  - minor fixes in the optional graphical outputs

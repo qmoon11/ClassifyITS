@@ -1,4 +1,4 @@
-# Silence R CMD check notes about NSE (ggplot2/dplyr)
+# Silence R CMD check notes about NSE (ggplot2)
 utils::globalVariables(c(
   "evalue",
   "x", "label",
