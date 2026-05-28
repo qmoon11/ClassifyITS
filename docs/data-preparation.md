@@ -11,11 +11,28 @@ Below is a typical workflow to prepare your inputs (run on HPC):
     export PATH=/your/path/to/ncbi-blast-2.17.0+/bin:$PATH
 ```
 
-2. Download the latest UNITE eukaryotic ITS database from https://unite.ut.ee/
-It is recommended to use the latest UNITE eukaryotic ITS database for best results. Download the "General FASTA release" that matches your needs. For example:  
-```bash
+2. Download the latest UNITE eukaryotic ITS database from <https://unite.ut.ee/>
+
+    ClassifyITS does not download the UNITE database automatically. Users should download the appropriate UNITE FASTA file manually from the UNITE website before running BLAST.
+
+    It is recommended to use the latest UNITE eukaryotic ITS database for best results. On the UNITE website, choose the "General FASTA release" that matches your analysis needs. For fungal ITS classification, the eukaryotic ITS release is typically appropriate.
+
+    For example, you may download a file such as:
+
+    ```text
     UNITE/euk/sh_general_release_dynamic_s_all_19.02.2025.fasta
-```
+    ```
+
+    The exact filename may differ depending on the UNITE release date and selected database type. After downloading, place the FASTA file in your project directory or update the paths in the commands below to point to the downloaded file.
+
+    For example, if your downloaded file is located at:
+
+    ```text
+    UNITE/euk/sh_general_release_dynamic_s_all_19.02.2025.fasta
+    ```
+
+    then use that path in the `makeblastdb` command below.
+    
 3. Build the BLAST database:
 ```bash
     makeblastdb \
