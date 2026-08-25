@@ -2,7 +2,7 @@
 
 **ClassifyITS** is an R package for quality control, taxonomy assignment, and visualization of fungal operational taxonomic unit (OTU) representative sequences based on user provided BLAST results.
 
-Fungi are ubiquitous in Earth's wonderfully diverse ecosystems. The AssignITS package aids in the taxonomic classification of environmental (internal transcribed spacer) ITS short-read barcoding data.
+Fungi are ubiquitous in Earth's wonderfully diverse ecosystems. The AssignITS package aids in the taxonomic classification of full length or subregion (ITS1 or ITS2) internal transcribed spacer (ITS) sequence data.
 Unlike previous methods, it employs taxon-specific e-value and percent identity cutoffs at each taxonomic rank from kingdom to species. 
 The package takes a conservative approach and outputs both graphics and user-friendly files to help users manually inspect fungal OTUs that fail classification at relevant levels (e.g., Phylum). 
 AssignITS is based on taxonomic cutoff criteria from "The Global Soil Mycobiome consortium dataset for boosting fungal diversity research" (Fungal Diversity, Tedersoo et al., 2021, doi:10.1007/s13225-021-00493-7) and "Best practices in metabarcoding of fungi: From experimental design to results" (Molecular Ecology, Tedersoo et al., 2022, doi:10.1111/mec.16460).
