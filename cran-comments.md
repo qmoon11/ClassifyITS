@@ -10,7 +10,5 @@ Notes:
 - unable to verify current time (local check); no files with future timestamps.
 
 ## Comments
-- Update release (version 1.0.2).
-- Summary of changes:
-  - minor bug fixes in the consensus checks
-  - minor fixes in the optional graphical outputs
+- Update release (version 1.0.3).
+- Minor fixes in language surrounding full length ITS in the Description.

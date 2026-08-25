@@ -1,3 +1,2 @@
-# ClassifyITS 1.0.2
-- Minor bug fixes to consensus-based assignment checks.
-- Minor fixes to optional graphical outputs.
+# ClassifyITS 1.0.3
+- Minor fixes in language surrounding full length ITS in the Description.
